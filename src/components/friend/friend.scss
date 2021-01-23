@@ -1,0 +1,46 @@
+.friend-item {
+    display: flex;
+    align-items: center;
+    background-color: #ddd;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+
+    
+    &__avatar img{
+        width: 40px;
+        height: auto;
+        margin-right: 10px;
+    }
+
+    &__data {
+        flex-grow: 1;
+        text-align: left;
+    }
+
+    &__name {
+        font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    &__phone {
+        font-size: 11px;
+        color: #666
+    }
+
+    &__chevron {
+        justify-self: flex-end;
+        font-size: 16px;
+        color: #666;
+        margin-right: 10px;
+    }
+
+    &:hover, &.--active {
+        background-color: #aaa;
+        .friend-item__chevron {
+            color: lawngreen;
+        }
+    }
+} 

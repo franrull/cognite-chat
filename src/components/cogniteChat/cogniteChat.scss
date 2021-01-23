@@ -1,0 +1,16 @@
+.cognite-chat{
+  display: flex;
+  justify-content: flex-start;
+  min-width: 800px;
+  min-height: 600px;
+}
+
+.friends-list {
+  width: 250px;
+  background-color: #eee;
+}
+
+.current-chat {
+  flex-grow: 1;
+  background-color: white;
+}
