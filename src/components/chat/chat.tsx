@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { uuid } from 'uuidv4';
 import { Chat } from '../../types/Chat';
@@ -9,6 +9,7 @@ import { MessageComponent } from '../message/message';
 import './chat.scss';
 
 export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message) => void }) => {
+    let nameInput: HTMLInputElement | null;
     const { chat, onMessage } = props;
     const [text, setText] = useState<string>('')
 
@@ -28,6 +29,10 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
             sendMessage();
         }
     }
+
+    useEffect(() => {
+        nameInput?.focus();
+    }, [chat.id])
     
     return (
         <div className="chat">
@@ -37,7 +42,9 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
                 ))}
             </div>
             <div className="chat__composer">
-                <input className="chat__input" type="text" value={text} onChange={evt => setText(evt.target.value)} onKeyDown={handleKeyDown}/>
+                <input className="chat__input" type="text" 
+                    ref={(input) => { nameInput = input; }} 
+                    value={text} onChange={evt => setText(evt.target.value)} onKeyDown={handleKeyDown}/>
                 <button className="chat__send-button" onClick={() => sendMessage()}>
                     <FaCheck/>
                 </button>
