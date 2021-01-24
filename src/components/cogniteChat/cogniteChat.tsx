@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { uuid } from 'uuidv4';
-import { Chat } from '../../types/Chat';
 
+import { Chat } from '../../types/Chat';
 import { Friend } from '../../types/Friend';
 import { Message } from '../../types/Message';
 import { ChatComponent } from '../chat/chat';
@@ -18,9 +18,9 @@ const friends: Friend[] = [
     },
     {
         id: uuid(),
-        name: 'Barack',
-        lastName: 'Obama',
-        phone: '+41 8745 234 232'
+        name: 'Morten',
+        lastName: 'Hillbom',
+        phone: '+47 8745 234 232'
     },
     {
         id: uuid(),
@@ -66,6 +66,10 @@ const CogniteChat = () => {
         const activeMessages = messages.filter(m => m.author === activeChat?.id);
         updateActiveChatMessages(activeMessages)
     },[messages]);
+    
+    useEffect(() => {
+        friends?.length && selectFriend(friends[0].id);
+    },[]);
 
     return (
         <div className="cognite-chat">

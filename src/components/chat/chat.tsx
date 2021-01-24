@@ -22,6 +22,13 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
         onMessage && onMessage(message);
         setText('');
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+    
     return (
         <div className="chat">
             <div className="chat__message-list">
@@ -30,7 +37,7 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
                 ))}
             </div>
             <div className="chat__composer">
-                <input className="chat__input" type="text" value={text} onChange={evt => setText(evt.target.value)}/>
+                <input className="chat__input" type="text" value={text} onChange={evt => setText(evt.target.value)} onKeyDown={handleKeyDown}/>
                 <button className="chat__send-button" onClick={() => sendMessage()}>
                     <FaCheck/>
                 </button>
