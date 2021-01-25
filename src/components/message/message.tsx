@@ -7,7 +7,7 @@ export const MessageComponent = (props: {message: Message}) => {
     return (
         <div className="message">
             <div className="message__text">{message.text}</div>
-            <div className="message__time">{message.date.format('mm:ss')}</div>
+            <div className="message__time">{message.date.format('hh:mm')}</div>
         </div>
     )
 }

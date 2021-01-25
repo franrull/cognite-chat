@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { uuid } from 'uuidv4';
 
-import { Chat } from '../../types/Chat';
 import { Friend } from '../../types/Friend';
 import { Message } from '../../types/Message';
 import { ChatComponent } from '../chat/chat';
@@ -39,45 +38,35 @@ const friends: Friend[] = [
 const CogniteChat = () => {
 
     const [messages, setMessages] = useState<Message[]>([]);
-    const [activeChat, setActiveChat] = useState<Chat | null>(null);
+    const [activeChatMessages, setActiveChatMessages] = useState<Message[]>([]);
+    const [activeChatId, setActiveChatId] = useState<string | null>(null);
 
     const selectFriend = (friendId: string) => {
         const activeMessages = messages.filter(m => m.author === friendId);
-        const chat: Chat = {
-            id: friendId,
-            messages: [...activeMessages],
-        };
-        setActiveChat(chat)
+        setActiveChatId(friendId)
+        setActiveChatMessages([...activeMessages])
     }
 
     const addMessage = (message: Message) => {
         setMessages([...messages, message])
     }
 
-    const updateActiveChatMessages = (messages: Message[]) => {
-        if(!activeChat) return;
-        setActiveChat({
-            id: activeChat!.id,
-            messages: [...messages],
-        });
-    }
-
     useEffect(() => {
-        const activeMessages = messages.filter(m => m.author === activeChat?.id);
-        updateActiveChatMessages(activeMessages)
-    },[messages]);
+        const activeMessages = messages.filter(m => m.author === activeChatId);
+        setActiveChatMessages([...activeMessages])
+    },[activeChatId, messages]);
     
     useEffect(() => {
-        friends?.length && selectFriend(friends[0].id);
+        friends?.length && setActiveChatId(friends[0].id);
     },[]);
 
     return (
         <div className="cognite-chat">
             <div className="friends-list">
-                {friends?.length && friends.map(f => (<FriendComponent key={f.id} friend={f} isActive={activeChat?.id === f.id} onClick={selectFriend}/>))}
+                {friends?.length && friends.map(f => (<FriendComponent key={f.id} friend={f} isActive={activeChatId === f.id} onClick={selectFriend}/>))}
             </div>
             <div className="current-chat">
-                {activeChat && <ChatComponent chat={activeChat} onMessage={addMessage} />}
+                {activeChatId && <ChatComponent chatId={activeChatId} messages={activeChatMessages} onMessage={addMessage} />}
             </div>
         </div>
     )

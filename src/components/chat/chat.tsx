@@ -2,15 +2,14 @@ import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { uuid } from 'uuidv4';
-import { Chat } from '../../types/Chat';
 import { Message } from '../../types/Message';
 import { MessageComponent } from '../message/message';
 
 import './chat.scss';
 
-export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message) => void }) => {
-    let nameInput: HTMLInputElement | null;
-    const { chat, onMessage } = props;
+export const ChatComponent = (props: {chatId: string, messages: Message[], onMessage?: (message: Message) => void }) => {
+    let nameInput: HTMLInputElement | null = null;
+    const { chatId, messages, onMessage } = props;
     const [text, setText] = useState<string>('')
 
     const sendMessage = () => {
@@ -18,7 +17,7 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
             id: uuid(),
             text,
             date: moment(),
-            author: chat.id
+            author: chatId
         };  
         onMessage && onMessage(message);
         setText('');
@@ -32,12 +31,12 @@ export const ChatComponent = (props: {chat: Chat, onMessage?: (message: Message)
 
     useEffect(() => {
         nameInput?.focus();
-    }, [chat.id])
+    }, [nameInput, chatId])
     
     return (
         <div className="chat">
             <div className="chat__message-list">
-                {chat?.messages?.length > 0 && chat.messages.map(m => (
+                {messages?.length > 0 && messages.map(m => (
                     <MessageComponent key={m.id} message={m}/>
                 ))}
             </div>
