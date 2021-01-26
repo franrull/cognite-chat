@@ -54,21 +54,15 @@ const CogniteChat = () => {
         setMessages([...messages, message])
     }
     const sortFriends = (a: Friend, b: Friend) => {
-        const lastmessageA = getLastMessage(a);
-        const lastmessageB = getLastMessage(b);
-        if(lastmessageA && lastmessageB) {
-            return lastmessageB.date.unix() - lastmessageA.date.unix();
-        } else if(lastmessageA && !lastmessageB) {
+        if(a.lastMessageDate && b.lastMessageDate) {
+            return b.lastMessageDate.unix() - a.lastMessageDate.unix();
+        } else if(a.lastMessageDate && !b.lastMessageDate) {
             return -1;
-        } else if(lastmessageB && !lastmessageA){
+        } else if(b.lastMessageDate && !a.lastMessageDate){
             return 1;
         } else {
             return 0;
         }
-    }
-    const getLastMessage = (friend: Friend) => {
-        const [lastMessage] = messages.filter(m => m.author === friend.id).sort((a, b) => b.date.unix() - a.date.unix());
-        return lastMessage;
     }
 
     useEffect(() => {
@@ -77,15 +71,16 @@ const CogniteChat = () => {
     },[activeChatId, messages]);
     
     useEffect(() => {
-        setFriends(hardcodedFriends);
-        friends?.length && setActiveChatId(friends[0].id);
-    },[]);
-    
-    useEffect(() => {
         if(friends?.length) {
             setFriends(friends.sort(sortFriends));
         }
-    },[messages]);
+    },[friends, messages]);
+
+    // On "init" --> runs only once
+    useEffect(() => {
+        setFriends(hardcodedFriends);
+        friends?.length && setActiveChatId(friends[0].id);
+    },[]);
 
     return (
         <div className="cognite-chat">

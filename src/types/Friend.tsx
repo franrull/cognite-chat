@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { Message } from "./Message";
 
 export type Friend = {
@@ -6,4 +7,5 @@ export type Friend = {
     lastName: string;
     phone: string;
     currentMessage?: string;
+    lastMessageDate?: Moment;
 }

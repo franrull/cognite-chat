@@ -20,7 +20,10 @@ export const ChatComponent = (props: {chatId: string, messages: Message[], curre
             text,
             date: moment(),
             author: chatId
-        };  
+        };
+        if(currentFriend) {
+            currentFriend.lastMessageDate = moment();
+        }
         onMessage && onMessage(message);
 
         setAnimate(true)
@@ -50,7 +53,7 @@ export const ChatComponent = (props: {chatId: string, messages: Message[], curre
             currentFriend.currentMessage = text;
         }
     }, [currentFriend, text])
-    
+
     return (
         <div className="chat">
             <div className="chat__message-list">
