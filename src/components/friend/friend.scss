@@ -6,8 +6,8 @@
     border-radius: 10px;
     padding: 5px;
     margin: 5px;
+    border: 1px solid #ddd;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
     
     &__avatar img{
         width: 40px;
@@ -40,21 +40,21 @@
         transition-duration: 0.5s;
     }
 
-    &:hover, &.--active {
-        background-color: #aaa;
-        .friend-item__chevron {
-            color: lawngreen;
-        }
-    }
+    
     &:hover {
-        transform: scale(1.02);
-        box-shadow: 0 0 5px #666;
-
+        background-color: #bbb;
         .friend-item__chevron {
+            color: white;
             transform: translateX(5px);
         }
         .friend-item__avatar img {
             transform: scale(1.15);
+        }
+    }
+    &.--active {
+        background-color: white;
+        .friend-item__chevron {
+            color: lawngreen;
         }
     }
 } 
