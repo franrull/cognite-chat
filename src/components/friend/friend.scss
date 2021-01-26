@@ -7,12 +7,13 @@
     padding: 5px;
     margin: 5px;
     cursor: pointer;
-
+    transition: all 0.3s ease-in-out;
     
     &__avatar img{
         width: 40px;
         height: auto;
         margin-right: 10px;
+        transition: all 0.5s ease-in-out;
     }
 
     &__data {
@@ -35,12 +36,25 @@
         font-size: 16px;
         color: #666;
         margin-right: 10px;
+        transition-property: transform;
+        transition-duration: 0.5s;
     }
 
     &:hover, &.--active {
         background-color: #aaa;
         .friend-item__chevron {
             color: lawngreen;
+        }
+    }
+    &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 5px #666;
+
+        .friend-item__chevron {
+            transform: translateX(5px);
+        }
+        .friend-item__avatar img {
+            transform: scale(1.15);
         }
     }
 } 
